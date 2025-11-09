@@ -1,8 +1,8 @@
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS = pipex_bonus.c get_path.c
+SRCS = get_path.c pipex.c 
 OBJS = $(SRCS:.c=.o)
 
 RM = rm -rf
