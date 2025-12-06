@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecakal <ecakal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/02 13:12:31 by ecakal            #+#    #+#             */
-/*   Updated: 2025/11/09 19:29:59 by ecakal           ###   ########.fr       */
+/*   Created: 2025/12/06 02:09:32 by ecakal            #+#    #+#             */
+/*   Updated: 2025/12/06 03:51:15 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ static void	handle_command(char **command1, char **command2)
 	exit(127);
 }
 
+static void	dup_and_close(int fd_in, int out)
+{
+	dup2(fd_in, STDIN_FILENO);
+	dup2(out, STDOUT_FILENO);
+	close(fd_in);
+	close(out);
+}
 static void	child_process(int *pipefd, int fd_in, char **command[], char **envp)
 {
 	char	*path1;
@@ -33,10 +40,7 @@ static void	child_process(int *pipefd, int fd_in, char **command[], char **envp)
 	}
 	if (command[0] != NULL)
 	{
-		dup2(fd_in, STDIN_FILENO);
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(fd_in);
-		close(pipefd[1]);
+		dup_and_close(fd_in, pipefd[1]);
 		path1 = get_path(command[0][0], envp);
 		if (path1 == NULL)
 		{
@@ -120,5 +124,5 @@ int	main(int ac, char **av, char **envp)
 		waitpid(pid, NULL, 0);
 		parent_process(pipefd, fd_out, command, envp);
 	}
-	return (1);
+	return (0);
 }
