@@ -6,23 +6,11 @@
 /*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 02:10:58 by ecakal            #+#    #+#             */
-/*   Updated: 2025/12/06 02:11:01 by ecakal           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:17:29 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	clean_pipe(int fd_in, int fd_out, char **command1, char **command2)
-{
-	if (fd_in != -1)
-		close(fd_in);
-	if (fd_out != -1)
-		close(fd_out);
-	if (command1)
-		free_split(command1);
-	if (command2)
-		free_split(command2);
-}
 
 void	free_split(char **str)
 {
@@ -71,7 +59,7 @@ char	*get_path(char *av, char **env)
 	splitted_path = NULL;
 	if (!av || !av[0])
 		return (NULL);
-	if (access(av, X_OK | F_OK) == 0)
+	if (ft_strchr(av, '/'))
 		return (ft_strdup(av));
 	i = 0;
 	while (env[i] != NULL)
