@@ -6,7 +6,7 @@
 /*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 20:27:41 by ecakal            #+#    #+#             */
-/*   Updated: 2025/12/11 14:28:10 by ecakal           ###   ########.fr       */
+/*   Updated: 2025/12/11 19:42:57 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,7 @@ void	parent_process(int *pipefd, int fd_out, char **command[], char **envp)
 		print_command_error(command[1][0]);
 		handle_command(NULL, command[1], 127);
 	}
-	if (access(path2, F_OK) == -1)
-	{
-		free(path2);
-		print_command_error(command[1][0]);
-		handle_command(NULL, command[1], 127);
-	}
-	if (access(path2, X_OK) == -1)
-	{
-		free(path2);
-		write(2, "pipex: permission denied: ", 26);
-		write(2, command[1][0], ft_strlen(command[1][0]));
-		write(2, "\n", 1);
-		handle_command(NULL, command[1], 126);
-	}
-	
+	check_file_access(path2, command[1]);
 	execve(path2, command[1], envp);
 	free(path2);
 	perror("execve failed");
