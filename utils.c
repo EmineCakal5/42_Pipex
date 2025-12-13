@@ -6,7 +6,7 @@
 /*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 20:23:14 by ecakal            #+#    #+#             */
-/*   Updated: 2025/12/11 19:42:57 by ecakal           ###   ########.fr       */
+/*   Updated: 2025/12/13 21:31:03 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	handle_command(char **command1, char **command2, int status)
 	exit(status);
 }
 
-void	check_file_access(char *path, char **cmd)
+void	check_file_access(char *path, char **cmd, char **other_cmd)
 {
 	if (access(path, F_OK) == -1)
 	{
 		free(path);
 		print_command_error(cmd[0]);
-		handle_command(NULL, cmd, 127);
+		handle_command(cmd, other_cmd, 127);
 	}
 	if (access(path, X_OK) == -1)
 	{
@@ -49,6 +49,6 @@ void	check_file_access(char *path, char **cmd)
 		write(2, "pipex: permission denied: ", 26);
 		write(2, cmd[0], ft_strlen(cmd[0]));
 		write(2, "\n", 1);
-		handle_command(NULL, cmd, 126);
+		handle_command(cmd, other_cmd, 126);
 	}
 }

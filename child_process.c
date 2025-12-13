@@ -6,7 +6,7 @@
 /*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 20:27:29 by ecakal            #+#    #+#             */
-/*   Updated: 2025/12/11 20:15:53 by ecakal           ###   ########.fr       */
+/*   Updated: 2025/12/13 21:32:13 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	execute_command_with_path(char *path, char **command[], char **envp)
 {
-	check_file_access(path, command[0]);
+	check_file_access(path, command[0], command[1]);
 	execve(path, command[0], envp);
 	free(path);
 	perror("execve failed");
-	handle_command(command[0], NULL, EXIT_FAILURE);
+	handle_command(command[0], command[1], EXIT_FAILURE);
 }
 
 void	child_process(int *pipefd, int fd_in, char **command[], char **envp)
@@ -29,20 +29,20 @@ void	child_process(int *pipefd, int fd_in, char **command[], char **envp)
 	if (!command[0] || !command[0][0])
 	{
 		ft_putendl_fd("Error: First command is empty", STDERR_FILENO);
-		handle_command(command[0], NULL, 127);
+		handle_command(command[0], command[1], 127);
 	}
 	if (fd_in == -1)
 	{
 		close(pipefd[1]);
 		ft_putendl_fd("Error: Input file error", STDERR_FILENO);
-		handle_command(command[0], NULL, 1);
+		handle_command(command[0], command[1], 1);
 	}
 	dup_and_close(fd_in, pipefd[1]);
 	path1 = get_path(command[0][0], envp);
 	if (path1 == NULL)
 	{
 		print_command_error(command[0][0]);
-		handle_command(command[0], NULL, 127);
+		handle_command(command[0], command[1], 127);
 	}
 	execute_command_with_path(path1, command, envp);
 }

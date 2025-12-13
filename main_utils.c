@@ -6,7 +6,7 @@
 /*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 20:00:00 by ecakal            #+#    #+#             */
-/*   Updated: 2025/12/11 19:51:03 by ecakal           ###   ########.fr       */
+/*   Updated: 2025/12/13 21:28:08 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int	files_init(char **av, int *fd_in, int *fd_out)
 {
 	*fd_in = open(av[1], O_RDONLY);
 	if (*fd_in == -1)
-	{
 		perror("Error opening input file.");
-		return (0);
-	}
 	*fd_out = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (*fd_out == -1)
 	{

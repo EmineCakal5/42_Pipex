@@ -1,6 +1,6 @@
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 SRCS = get_path.c pipex.c utils.c child_process.c parent_process.c main_utils.c
 OBJS = $(SRCS:.c=.o)

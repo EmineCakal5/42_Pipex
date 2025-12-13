@@ -6,7 +6,7 @@
 /*   By: ecakal <ecakal@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 02:10:58 by ecakal            #+#    #+#             */
-/*   Updated: 2025/12/11 14:17:29 by ecakal           ###   ########.fr       */
+/*   Updated: 2025/12/13 21:27:42 by ecakal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*get_path(char *av, char **env)
 	char	*result;
 	char	**splitted_path;
 
-	splitted_path = NULL;
 	if (!av || !av[0])
 		return (NULL);
 	if (ft_strchr(av, '/'))
